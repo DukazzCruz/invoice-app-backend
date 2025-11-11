@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
+const config = require("../config");
 
-let password = 'LTFmQfZMQiqTZCvJ'
-const mongodb_url = `mongodb+srv://jihad:${password}@cluster0-otqbz.mongodb.net/invoice-app?retryWrites=true&w=majority`
+const mongodb_url = config.MONGODB_URI;
+mongoose.connect(mongodb_url).then(r => console.log("MongoDB Connected", mongodb_url));
 
-mongoose.connect(mongodb_url, {useNewUrlParser: true,useUnifiedTopology: true})
 
 module.exports = {mongoose}

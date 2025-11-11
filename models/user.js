@@ -3,7 +3,8 @@ const Schema = mongoose.Schema
 const jwt = require("jsonwebtoken")
 const bcrypt = require("bcrypt")
 const _ = require("lodash")
-const SECRET_KEY = '497DCF8A12BDFC37F2B2056FE8CE1FD0A7FEF52EE83DEC10F307015226256D44';
+const config = require("../config");
+const SECRET_KEY = config.JWT_SECRET;
 
 const UserSchema = new Schema({
     name: {
