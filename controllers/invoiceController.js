@@ -6,12 +6,13 @@ const {Payment} = require("../models/payment")
 const authenticate = require("../middlewares/authenticate")
 let path = require('path');
 let nodemailer = require('nodemailer');
+const config = require("../config");
 
 let transporter = nodemailer.createTransport({
-    service: 'gmail',
+    service: config.SMTP_SERVICE,
     auth: {
-        user: 'invoiceappserver@gmail.com',
-        pass: 'invoice@ppSender' //Should be set up with env variables
+        user: config.SMTP_USER,
+        pass: config.SMTP_PASS
     }
 });
 
@@ -88,7 +89,7 @@ router.post("/send", authenticate, (req, res) => {
             let fullUrl = `${req.protocol}://${req.get('host')}/payment/id/${payment._id}`;
             invoiceToPdf(req.user, payment.invoice);
             let mailOptions = {
-                from: 'invoiceappserver@gmail.com',
+                from: config.SMTP_USER,
                 to: payment.invoice.customer.email,
                 subject: `Invoice number ${payment.invoice.number}`,
                 text: `Pay your latest invoice here ${fullUrl}`,
