@@ -4,7 +4,8 @@ const {Invoice} = require("../models/invoice")
 const authenticate = require("../middlewares/authenticate")
 let path = require('path');
 let views = path.resolve('views');
-const stripe = require("stripe")("sk_test_UsyZgjl89d3vybFAaCjp1SmO00GtvBsaUL");
+const config = require("../config");
+const stripe = require("stripe")(config.STRIPE_SECRET_KEY);
 
 const router = express.Router();
 
@@ -61,7 +62,7 @@ router.get('/id/:_id', (req, res, next) => {
 
 
 router.get("/stripe-key", (req, res) => {
-    res.send({publicKey: 'pk_test_FV9xZrXldD4HdpzeanB6kLlv00ah51eqsV'});
+    res.send({publicKey: config.STRIPE_PUBLIC_KEY});
 });
 
 router.post("/pay", async (req, res) => {
